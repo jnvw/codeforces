@@ -1,20 +1,37 @@
-for _ in range(int(input())):
-    n = int(input())
-    s = input().strip()
+import sys
+
+def solve():
+    d = sys.stdin.read().split()
+    if not d:
+        return
     
-    need_a = (n + 1) // 2
-    need_b = n // 2
+    t = int(d[0])
+    p = 1
+    o = []
     
-    count_a = s.count('a')
-    count_b = s.count('b')
-    count_q = s.count('?')
-    
-    rem_a = need_a - count_a
-    rem_b = need_b - count_b
-    
-    if rem_a < 0 or rem_b < 0:
-        print("NO")
-    elif rem_a + rem_b == count_q:
-        print("YES")
-    else:
-        print("NO")
+    for _ in range(t):
+        n = int(d[p])
+        s = d[p + 1]
+        p += 2
+        
+        ok = True
+        
+        if n % 2:
+            if s[0] == 'b':
+                ok = False
+            st = 1
+        else:
+            st = 0
+            
+        if ok:
+            for i in range(st, n, 2):
+                if s[i] == s[i+1] and s[i] != '?':
+                    ok = False
+                    break
+                    
+        o.append("YES" if ok else "NO")
+        
+    print('\n'.join(o))
+
+if __name__ == '__main__':
+    solve()
